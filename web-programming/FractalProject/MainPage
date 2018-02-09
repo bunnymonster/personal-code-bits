@@ -7,6 +7,18 @@
 	<body>
 		<div>
 			<canvas id="fractalDisplay", width=480, height=480></canvas>
+			<div>
+				<input type="text" id="minXWindow">Minimum X Value
+			</div>
+			<div>
+				<input type="text" id="maxXWindow">Maximum X Value
+			</div>
+			<div>
+				<input type="text" id="minYWindow">Minimum Y Value
+			</div>
+			<div>
+				<input type="text" id="maxYWindow">Maximum Y Value
+			</div>
 		</div>
 		<button id="generatorButton" onclick="generateMandelbrot()">Generate Fractal</button>
 	</body>
@@ -16,12 +28,19 @@
 		var ctx = canvas.getContext("2d");
 		
 		function generateMandelbrot() {
-			var xRange = 4;
-			var yRange = 4;
+			//Clear canvas before redrawing
+			ctx.clearRect(0, 0, 480, 480)
+			var minXValue = Number(document.getElementById("minXWindow").value);
+			var minYValue = Number(document.getElementById("minYWindow").value);
+			var maxXValue = Number(document.getElementById("maxXWindow").value);
+			var maxYValue = Number(document.getElementById("maxYWindow").value);
+
+			var xRange = maxXValue-minXValue;
+			var yRange = maxYValue-minYValue;
 
 			for(var i=0;i<480;i++) {
 				for(var j=0;j<480;j++) {
-					var complexNum = math.complex(xRange/2-i*xRange/480, yRange/2-j*yRange/480);
+					var complexNum = math.complex(minXValue+i*xRange/480, minYValue+j*yRange/480);
 					var seed = math.complex(0,0);
 					for(var iter = 0; iter < 12; iter++) {
 						seed = math.add(math.multiply(seed, seed),complexNum);
@@ -29,12 +48,10 @@
 					var magnitude = math.pow(seed.re,2)+math.pow(seed.im,2);
 					if(magnitude < 2) {
 						ctx.fillStyle = "#000000";
-						ctx.fillRect(480-i,480-j,1,1);
+						ctx.fillRect(i,480-j,1,1);//flip y axis becuase canvas coords start 0 at top
 					}
 				}
 			}
-			ctx.fillStyle = "#000000";
-			ctx.fillRect(0,0,1,1);
 		}
 	</script>
 </html>
