@@ -19,36 +19,74 @@
 			<div>
 				<input type="text" id="maxYWindow">Maximum Y Value
 			</div>
+			<div></div>
 		</div>
-		<button id="generatorButton" onclick="generateMandelbrot()">Generate Fractal</button>
+		<button id="generatorButton" onclick="generateMandelbrot()">Generate Mandelbrot</button>
+		<input type="text" id="juliaSeed">Julia Seed
+		<button id="generatorJuliaButton" onclick="generateJulia()">Generate Julia</button>
 	</body>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.20.2/math.min.js"></script>
 	<script>
 		var canvas = document.getElementById("fractalDisplay");
 		var ctx = canvas.getContext("2d");
-		
-		function generateMandelbrot() {
-			//Clear canvas before redrawing
-			ctx.clearRect(0, 0, 480, 480)
-			var minXValue = Number(document.getElementById("minXWindow").value);
-			var minYValue = Number(document.getElementById("minYWindow").value);
-			var maxXValue = Number(document.getElementById("maxXWindow").value);
-			var maxYValue = Number(document.getElementById("maxYWindow").value);
 
-			var xRange = maxXValue-minXValue;
-			var yRange = maxYValue-minYValue;
+		var minXValue;
+		var minYValue;
+		var maxXValue;
+		var maxYValue;
+		var juliaConstant;
+
+		var xRange;
+		var yRange;
+
+		function setParameters() {
+			//Clear canvas before redrawing
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+			minXValue = Number(document.getElementById("minXWindow").value);
+			minYValue = Number(document.getElementById("minYWindow").value);
+			maxXValue = Number(document.getElementById("maxXWindow").value);
+			maxYValue = Number(document.getElementById("maxYWindow").value);
+			juliaConstant = math.complex(document.getElementById("juliaSeed").value);
+			console.log(juliaConstant)
+			xRange = maxXValue-minXValue;
+			yRange = maxYValue-minYValue;
+
+			ctx.canvas.height = 480*(yRange/xRange)
+		}
+
+		function generateJulia() {
+			setParameters();
 
 			for(var i=0;i<480;i++) {
-				for(var j=0;j<480;j++) {
-					var complexNum = math.complex(minXValue+i*xRange/480, minYValue+j*yRange/480);
+				for(var j=0;j<ctx.canvas.height;j++) {
+					var complexNum = math.complex(minXValue+i*xRange/480, minYValue+j*yRange/ctx.canvas.height);
+					var seed = juliaConstant;
+					for(var iter = 0; iter < 12; iter++) {
+						complexNum = math.add(math.multiply(complexNum, complexNum),seed);
+					}
+					var magnitude = math.pow(complexNum.re,2)+math.pow(complexNum.im,2);
+					if(magnitude < 4) {
+						ctx.fillStyle = "#000000";
+						ctx.fillRect(i,ctx.canvas.height-j,1,1);//flip y axis becuase canvas coords start 0 at top
+					}
+				}
+			}
+		}
+		
+		function generateMandelbrot() {
+			setParameters();
+
+			for(var i=0;i<480;i++) {
+				for(var j=0;j<ctx.canvas.height;j++) {
+					var complexNum = math.complex(minXValue+i*xRange/480, minYValue+j*yRange/ctx.canvas.height);
 					var seed = math.complex(0,0);
 					for(var iter = 0; iter < 12; iter++) {
 						seed = math.add(math.multiply(seed, seed),complexNum);
 					}
 					var magnitude = math.pow(seed.re,2)+math.pow(seed.im,2);
-					if(magnitude < 2) {
+					if(magnitude < 4) {
 						ctx.fillStyle = "#000000";
-						ctx.fillRect(i,480-j,1,1);//flip y axis becuase canvas coords start 0 at top
+						ctx.fillRect(i,ctx.canvas.height-j,1,1);//flip y axis becuase canvas coords start 0 at top
 					}
 				}
 			}
