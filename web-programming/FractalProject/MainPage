@@ -2,28 +2,41 @@
 <html>
 	<head>
 		<title>Fractal Generator</title>
+		<style type="text/css">
+			canvas {border:1px solid #000000}
+			.horizontalDiv {display: inline-block}
+		</style>
 	</head>
 
 	<body>
-		<div>
+		<div class="horizontalDiv">
 			<canvas id="fractalDisplay", width=480, height=480></canvas>
-			<div>
-				<input type="text" id="minXWindow">Minimum X Value
-			</div>
-			<div>
-				<input type="text" id="maxXWindow">Maximum X Value
-			</div>
-			<div>
-				<input type="text" id="minYWindow">Minimum Y Value
-			</div>
-			<div>
-				<input type="text" id="maxYWindow">Maximum Y Value
-			</div>
-			<div></div>
 		</div>
-		<button id="generatorMandelbrotButton" onclick="generateMandelbrot()">Generate Mandelbrot</button>
-		<input type="text" id="juliaSeed">Julia Seed
-		<button id="generatorJuliaButton" onclick="generateJulia()">Generate Julia</button>
+		<div class="horizontalDiv">
+			<div>
+				<div>
+					<input type="text" id="minXWindow" value="-2">Minimum X Value
+				</div>
+				<div>
+					<input type="text" id="maxXWindow" value="2">Maximum X Value
+				</div>
+				<div>
+					<input type="text" id="minYWindow" value="-2">Minimum Y Value
+				</div>
+				<div>
+					<input type="text" id="maxYWindow" value="2">Maximum Y Value
+				</div>
+			</div>
+			<div>
+				<button id="generatorMandelbrotButton" onclick="generateMandelbrot()">Generate Mandelbrot</button>
+				<input type="text" id="juliaSeed" value="0">Julia Seed
+				<button id="generatorJuliaButton" onclick="generateJulia()">Generate Julia</button>
+				<input type="text" id="iterations" value="12">Iterations
+			</div>
+		</div>
+		<div>
+			<p>This page is designed to display either Mandelbrot fractals or Julia Fractals.</p>
+		</div>
 	</body>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.20.2/math.min.js"></script>
 	<script>
@@ -34,7 +47,10 @@
 		var minYValue;
 		var maxXValue;
 		var maxYValue;
+
 		var juliaConstant;
+		var iterCount;
+		var colorArray;
 
 		var xRange;
 		var yRange;
@@ -42,12 +58,15 @@
 		function setParameters() {
 			//Clear canvas before redrawing
 			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
 			minXValue = Number(document.getElementById("minXWindow").value);
 			minYValue = Number(document.getElementById("minYWindow").value);
 			maxXValue = Number(document.getElementById("maxXWindow").value);
 			maxYValue = Number(document.getElementById("maxYWindow").value);
+			
 			juliaConstant = math.complex(document.getElementById("juliaSeed").value);
-			console.log(juliaConstant)
+			iterCount = Number(document.getElementById("iterations").value);
+
 			xRange = maxXValue-minXValue;
 			yRange = maxYValue-minYValue;
 
@@ -55,23 +74,23 @@
 		}
 
 		function generateFractal(fractalType) {
-			console.log(fractalType);
 			for(var i=0;i<480;i++) {
 				for(var j=0;j<ctx.canvas.height;j++) {
 					var complexNum = math.complex(minXValue+i*xRange/480, minYValue+j*yRange/ctx.canvas.height);
 					var seed = juliaConstant;
 					var magnitude;
+					var iter = 0;
 					if(fractalType==="julia"){
-						for(var iter = 0; iter < 15; iter++) {
+						while(iter<iterCount && math.pow(complexNum.re,2)+math.pow(complexNum.im,2)<4) {
 							complexNum = math.add(math.multiply(complexNum, complexNum),seed);
+							iter++;
 						}
 						magnitude = math.pow(complexNum.re,2)+math.pow(complexNum.im,2);
 					} else if(fractalType==="mandelbrot") {
 						seed = math.complex(0,0);
-
-						for(var iter = 0; iter < 15; iter++) {
+						while(iter<iterCount && math.pow(seed.re,2)+math.pow(seed.im,2)<4) {
 							seed = math.add(math.multiply(seed, seed),complexNum);
-							if(i%50==0&&j%50==0){console.log(seed);}
+							iter++;
 						}
 						magnitude = math.pow(seed.re,2)+math.pow(seed.im,2);
 					}
