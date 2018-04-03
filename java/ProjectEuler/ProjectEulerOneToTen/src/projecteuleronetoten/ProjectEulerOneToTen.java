@@ -31,15 +31,25 @@ public class ProjectEulerOneToTen {
     }
     
     public static void findMethod(int num) {
-        
-        String[] numToStrArray = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+
         try{
+            //use integer division to compute closest factor of 5, then add 1.
+            int methodLowerBound;
+            int methodUpperBound;
+            if(num % 5 != 0) {
+                methodLowerBound = (num / 5) * 5 + 1;
+                methodUpperBound = methodLowerBound + 4;
+            } else {
+                methodLowerBound = num - 4;
+                methodUpperBound = num;
+            }
+            String classStr = "projectproblems.Problem" + methodLowerBound + "To" + methodUpperBound;
             //load the AppTest at runtime
-            Class cls = Class.forName("projectproblems.Problem"+numToStrArray[num]);
+            Class cls = Class.forName(classStr);
             Object obj = cls.newInstance();
 
             //call the printIt method
-            Method method = cls.getDeclaredMethod("compute", null);
+            Method method = cls.getDeclaredMethod("computeProblem"+num, null);
             method.invoke(obj, null);
 			
 	}catch(Exception ex){
