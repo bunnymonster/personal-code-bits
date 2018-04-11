@@ -14,7 +14,7 @@ public class Problem010 {
     
     //Problem 7, 10
     //Check if number is prime.
-    public boolean isPrime(int p) {
+    public static boolean isPrime(int p) {
         //Smallest prime is 2
         if(p<2) {return false;}
         if(p==2) {return true;}

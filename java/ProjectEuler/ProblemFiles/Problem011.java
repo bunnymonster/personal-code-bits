@@ -74,7 +74,7 @@ public class Problem011 {
     }
 
     //Compute maxProduct for four consecutive numbers in array.
-    public long findMaxProduct(int[][] array, int firstIndex, int secondIndex, int firstIndexDir, int secondIndexDir, long maxProduct) {
+    public static long findMaxProduct(int[][] array, int firstIndex, int secondIndex, int firstIndexDir, int secondIndexDir, long maxProduct) {
         
         long product = 1;
         for(int i = 0; i < 4; i++) {

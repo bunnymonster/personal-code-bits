@@ -20,7 +20,7 @@ public class Problem004 {
     }
 
     //Checks if a number is a palindrome and returns appropriate boolean value
-    public boolean isPalindrome(Integer number) {
+    public static boolean isPalindrome(Integer number) {
         
         String str = number.toString();
         String strReverse = "";

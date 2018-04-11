@@ -31,7 +31,7 @@ public class Problem012 {
     }
 
     //Loop until sqrt(n) and add 2 for each pair of factors.
-    public long countDivisors(long n) {
+    public static long countDivisors(long n) {
         
         long count = 0;
         long end = (long)Math.sqrt(n);

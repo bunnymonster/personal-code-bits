@@ -20,7 +20,7 @@ public class Problem014 {
     //Collatz sequence defined as follows:
     //n -> n/2 if n even
     //n -> 3*n+1 if n odd.
-    public int collatzSequence(int n) {
+    public static int collatzSequence(int n) {
     
         int sequenceLen = 1;
         long value = n;
