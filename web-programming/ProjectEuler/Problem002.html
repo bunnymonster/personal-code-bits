@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<p id="problemTwo">Click to find out the sum of even fibbonaci numbers below 4000000.</p>
+		<p id="result"></p>
+	</body>
+	<script>
+		$("#problemTwo").click(function problemOne() {
+			var sum = 0;
+			var fibOne = 1;
+			var fibTwo = 2;
+
+			while(fibOne < 4000000) {
+				
+				//If fibOne is even, add to sum.
+				if(fibOne % 2 === 0) {
+					sum += fibOne;
+				}
+
+				//Calculate next fibbonaci number.
+				var temp = fibOne + fibTwo;
+				fibOne = fibTwo;
+				fibTwo = temp;
+			}
+			$("#result").text("The sum of even fibbonaci numbers below 4000000 is " + sum);
+		});
+	</script>
+</html>
