@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<p id="problemThree">Click to find out the largest prime factor of 600851475143.</p>
+		<p id="result"></p>
+	</body>
+	<script>
+		$("#problemThree").click(function problemThree() {
+			var seed = 600851475143;
+	        var value = seed;
+	        var maxFactor = 1;
+	        
+	        outer:
+	        while(value != 1) {
+	            //Check if value is prime.  If value is prime, compare to max.
+	            for(var i = 2; i < Math.sqrt(value); i++) {
+	                if(value % i == 0) {
+	                    if(maxFactor < i) {
+	                        maxFactor = i;
+	                    }
+	                    value /= i;
+	                    continue outer;
+	                }
+	            }
+	            //If this loop fails, then val is prime;
+	            if(maxFactor < value) {
+	                maxFactor = value;
+	            }
+	            value /= value;
+	        }
+	        
+	        $("#result").text("The largets prime factor of 600851475143 is " + maxFactor);
+		});
+	</script>
+</html>
