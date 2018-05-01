@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<p id="problemFour">Click to find out the largest palindrome which is a product of two numbers below 1000..</p>
+		<p id="result"></p>
+	</body>
+	<script>
+		$("#problemFour").click(function compute() {
+			
+			var max = 0;
+
+			//For all products of two number under 1000, check for palindrome and compare to max.
+			for(var i = 0; i < 1000; i++) {
+				for(var j = 0; j < 1000; j++) {
+					if(isPalindrome(i*j)) {
+						if(i*j > max) {
+							max = i*j;
+						}
+					}
+				}
+			}
+			$("#result").text("The largest palindrome which is a product of two numbers under 1000 is " + max);
+		});
+
+		//Test number for palindrome status.
+		function isPalindrome(number) {
+			var numString = number.toString();
+			var reverseString = "";
+
+			for(var i = numString.length-1; i >= 0; i--) {
+				reverseString += numString.charAt(i);
+			}
+
+			if(numString === reverseString) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
+</html>
