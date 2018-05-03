@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<p id="problem">Click to find out the difference of the square of sums and sum of squares of the first 100 natural numbers.</p>
+		<p id="result"></p>
+	</body>
+	<script>
+		$("#problem").click(function compute() {
+			var sumOfNaturals = 0;
+			var sumOfSquares = 0;
+			for(var i = 1; i <= 100; i++) {
+				//1+2+3+...
+				sumOfNaturals += i;
+				//1^2+2^2+3^2+...
+				sumOfSquares += i * i;
+			}
+			var result = sumOfNaturals * sumOfNaturals - sumOfSquares;
+	        
+	        $("#result").text("The difference of the square of sums and sum of squares of the first 100 natural numbers is " + result);
+		});
+	</script>
+</html>

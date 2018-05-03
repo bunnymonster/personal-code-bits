@@ -1,7 +1,7 @@
 public class Problem006 {
 	
 	/**
-    * Compute the difference of the square of sums and sum of squares of the first 1-- natural numbers.
+    * Compute the difference of the square of sums and sum of squares of the first 100 natural numbers.
     */
     public static void main(String[] args) {
         //1^2+2^2+...+100^2
