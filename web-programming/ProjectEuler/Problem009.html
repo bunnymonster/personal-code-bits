@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<p id="problem">Click to find out the product of the pythagorean triple a < b < c such that a+b+c=1000.</p>
+		<p id="result"></p>
+	</body>
+	<script>
+		$("#problem").click(function compute() {
+			//The sum of a, b, and c is 1000.
+			var sum = 1000;
+			var result = "";
+
+			//a must be less than sum/3.
+			for(var a = 1; a < sum/3; a++) {
+
+				//b must be greater than a and less than sum/2.
+				for(var b = a+1; b < sum/2; b++) {
+
+					//c is the remaining number needed to reach sum.  
+                	//Check if a, b, and c form a pythagorean triple.
+                	//If so, print their product.
+					var c = 1000 - a - b;
+					if(a*a + b*b === c*c) {
+						result += a*b*c + " for integers " +a + ", " + b + ", " + c;
+					}
+				}
+			}
+	        
+	        $("#result").text("The product satisfying the condition above is " + result);
+		});
+	</script>
+</html>
