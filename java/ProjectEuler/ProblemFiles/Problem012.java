@@ -22,7 +22,7 @@ public class Problem012 {
         long triangleNumber = 1;
         long increment = 2;
         
-        //loop until countDivisors > 500
+        //loop until countDivisors >= 500
         while(countDivisors(triangleNumber) < 500) {
             triangleNumber += increment;
             increment++;
@@ -30,7 +30,7 @@ public class Problem012 {
         System.out.println(triangleNumber);
     }
 
-    //Loop until sqrt(n) and add 2 for each pair of factors.
+    //Loop until sqrt(n) and add 2 because factos come in pairs.
     public static long countDivisors(long n) {
         
         long count = 0;
