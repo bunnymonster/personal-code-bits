@@ -3,7 +3,7 @@ public class Problem010 {
 	public static void main(String[] args) {
         long sum = 0;
         
-        //From numbers 1 to 2999999, add primes to sum.
+        //From numbers 1 to 2000000, add primes to sum.
         for(int i = 1; i < 2000000; i++) {
             if(isPrime(i)) {
                 sum += i;
