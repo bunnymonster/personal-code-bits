@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out the number below 1000000 with the longest collatz sequence.</p>
+		<p id=result></p>
+	</body>
+	<script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+	<script>
+		$("#problem").click(function compute() {
+			
+			var maxLength = 1;
+                  var collatzLength = 1;
+                  for(var i = 1; i < 1000000; i++) {
+                        collatzLength = collatzSequence(i);
+                        if(maxLength < collatzLength) {
+                              maxLength = collatzLength;
+                        }
+                  }
+	        $("#result").text("The number under 1000000 with the longest collatz sequence length is " + maxLength);
+		});
+
+            /* Compute collatz sequence length.
+            *
+            * The collatz sequence is defined as taking a number n,
+            * dividing it by 2 if n is even
+            * and multiplying n by 3 and adding 1 if n is odd.
+            */
+            function collatzSequence(n) {
+                  var sequenceLength = 1;
+                  while(n != 1) {
+                        if(n % 2 == 0) {
+                              n = n / 2;
+                        } else {
+                              n = 3 * n + 1;
+                        }
+                        sequenceLength++;
+                  }
+                  return sequenceLength;
+
+            }
+	</script>
+</html>
