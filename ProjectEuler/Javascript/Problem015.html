@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out the number of paths between diagonal corners of a 20x20 grid.</p>
+		<p id=result></p>
+	</body>
+	<script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+	<script>
+		$("#problem").click(function compute() {
+			
+			var result = factorial(20)/(Math.pow(factorial(10),2));
+	        $("#result").text("The number of paths between diagonal corners of a 20x20 grid is " + result);
+		});
+
+            function factorial(n) {
+                  if(n === 1) {
+                        return 1;
+                  } else {
+                        return n*factorial(n-1);
+                  }
+            }
+	</script>
+</html>
