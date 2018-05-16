@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out the sum of the digits of 2^1000.</p>
+		<p id=result></p>
+	</body>
+	<script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+	<script>
+		$("#problem").click(function compute() {
+			
+			var number = bigInt(1);
+			var TWO = bigInt(2);
+			var digitSum = 0;
+
+			for(var i = 0; i < 1000; i++) {
+				number = number.times(TWO);
+			}
+			var digits = number.toArray(10);
+			console.log(digits);
+			for(var j = 0; j < digits.value.length; j++) {
+				digitSum += digits.value[j];
+			}
+	        $("#result").text("The sum of digits of 2^1000 is " + digitSum);
+		});
+	</script>
+</html>
