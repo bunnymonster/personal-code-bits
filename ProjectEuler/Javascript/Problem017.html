@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out the sum of the word lengths of the first 1000 numbers.</p>
+		<p id=result></p>
+	</body>
+	<script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+	<script>
+		$("#problem").click(function compute() {
+			
+			var wordSum = 0;
+			for(var i = 1; i <= 1000; i++) {
+				wordSum += wordLength(i);
+			}
+	        $("#result").text("The sum of digits of 2^1000 is " + wordSum);
+		});
+
+		function wordLength(n) {
+			//Declare arrays storing lengths of number words
+	        //twentyLength stores lengths of numbers 0 to 19
+	        var twentyLength = [0,3,3,5,4,4,3,5,5,4,3,6,6,8,8,7,7,9,8,8];
+	        //tensLength stores lengths of 20, 30, 40, ... 80, 90
+	        var tensLength = [6,6,5,5,5,7,6,6];
+	        var hundredLength = 7;
+	        var wordLength = 0;
+	        
+	        //if n is 1000 return length of "one thousand".
+	        if(n == 1000) {
+	           return 11;
+	        }
+	        
+	        //Break input n into hundreds place, tens place and ones place.
+	        var hundredsPlace = (n - (n % 100))/100;
+	        n = (n % 100);
+	        var tensPlace = (n - (n % 10))/10;
+	        n = (n % 10);
+	        var onesPlace = n;
+	        
+	        //Add length of hundreds place.
+	        if(hundredsPlace > 0 && hundredsPlace < 10) {
+	            wordLength += twentyLength[hundredsPlace] + hundredLength;
+	            //If number doesnt end in 00, add "and".
+	            if(tensPlace > 0 || onesPlace > 0) {
+	                wordLength += 3;
+	            }
+	        }
+	        
+	        //Last two digits are a number greater or equal to 20
+	        if(tensPlace > 1) {
+	            wordLength += tensLength[tensPlace - 2];
+	            wordLength += twentyLength[onesPlace];
+	        } 
+	        //Else last two digits are either Xteen or 0 and digit.
+	        else {
+	            wordLength += twentyLength[tensPlace*10 + onesPlace];
+	        }
+	        
+	        return wordLength;
+		}
+	</script>
+</html>
