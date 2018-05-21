@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out number of Sundays that were the 1st of the month in the 20th century.</p>
+		<p id=result></p>
+	</body>
+	<script>
+		$("#problem").click(function compute() {
+			
+			        //Create array of month day counts for normal and leap years.
+	        var monthDaysNormalYear = [31,28,31,30,31,30,31,31,30,31,30,31];
+	        var monthDaysLeapYear = [31,29,31,30,31,30,31,31,30,31,30,31];
+	        
+	        //The day of week, 0=Sunday, 1=Monday, etc.
+	        //Given Jan 1 1900 was Monday, and there were
+	        //365 days in 1900, Jan 1, 1901 was a Tuesday.
+	        var dayOfWeek = 2;
+	        
+	        //Total Sundays that are First of the month
+	        var totalSundays = 0;
+	        
+	        //Modified leap year logic.
+	        //Since we only have 100 years, and 2000 is a leap year,
+	        //We only need to check whether the year is divisible by 4.
+	        for(var i = 1901; i < 2001; i++) {
+	            
+	            //For each month, add te number of days in it to dayOfWeek
+	            //To reach the next First of the month. Then check to see
+	            //if dayOfWeek is a Sunday, with value 0 mod 7.
+	            for(var month = 0; month < 12; month++) {
+	                if(i % 4 == 0) {
+	                    dayOfWeek +=monthDaysLeapYear[month];
+	                }  else {
+	                    dayOfWeek +=monthDaysNormalYear[month];
+	                }
+	                if(dayOfWeek % 7 == 0) {
+	                    totalSundays++;
+	                }
+	            }
+	        }
+	        
+	        $("#result").text("The number of Sundays that were the first of the month in the 20th century is " + totalSundays);
+		});
+
+	</script>
+</html>
