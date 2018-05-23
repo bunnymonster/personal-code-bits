@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out the sum of digits of 100!.</p>
+		<p id=result></p>
+	</body>
+	<script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+	<script>
+		$("#problem").click(function compute() {
+			
+			var result = factorial(100);
+			var digitArray = result.toArray(10);
+			var digitSum = 0;
+
+			for(var i = 0; i < digitArray.value.length; i++) {
+				digitSum += digitArray.value[i];
+			}
+			
+	        $("#result").text("The sum of digit of 100! is " + digitSum);
+		});
+
+		function factorial(n) {
+			if(n === 1) {
+				return bigInt(1);
+			} else {
+				return bigInt(n).times(factorial(n-1))
+			}
+		}
+	</script>
+</html>

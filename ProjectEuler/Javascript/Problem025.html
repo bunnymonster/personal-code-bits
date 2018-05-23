@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<p id=problem>Click to find out the index of the first 1000 digit fibonacci number.</p>
+		<p id=result></p>
+	</body>
+	<script src="http://peterolson.github.com/BigInteger.js/BigInteger.min.js"></script>
+	<script>
+		$("#problem").click(function compute() {
+			
+			var numberLength = 0;
+			var a = bigInt(1);
+			var b = bigInt(1);
+			var temp = bigInt(0);
+			var index = 1;
+
+			while(numberLength < 1000) {
+				temp = b;
+				b = a.add(b);
+				a = temp;
+
+				numberLength = a.toArray(10).value.length;
+				index++;
+			}
+			
+	        $("#result").text("The index of the first 1000 digit fibonacci number is " + index);
+		});
+
+	</script>
+</html>
